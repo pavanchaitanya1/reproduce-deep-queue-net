@@ -1,13 +1,12 @@
 import torch
 import torch.nn as nn
-from attention import SelfAttention
+from .attention import SelfAttention
 
 
 class DeepQueueNet(nn.Module):
-    def __init__(self,config,device):
+    def __init__(self,config, device):
         super(DeepQueueNet, self).__init__()
         self.config = config
-        #Encoder
         self.lstm1 = nn.LSTM(input_size=12, hidden_size=self.config.lstm_params['cell_neurons'][0], \
             num_layers=1, batch_first=True)
         self.lstm2 = nn.LSTM(input_size=self.config.lstm_params['cell_neurons'][0], \
@@ -17,17 +16,10 @@ class DeepQueueNet(nn.Module):
             self.fc2 = nn.Linear(self.config.mul_head_output_nodes, \
                 self.config.lstm_params['cell_neurons'][1])
         self.q_linear = nn.Linear(self.config.lstm_params['cell_neurons'][1], self.config.att)
-        # self.k_linear = nn.Linear(self.config.lstm_params['cell_neurons'][1],self.config.att)
-        # self.v_linear = nn.Linear(self.config.lstm_params['cell_neurons'][1],self.config.att)
-
-        # self.multihead_attn = nn.MultiheadAttention(self.config.att, \
-        #     self.config.mul_head)
         self.atts = nn.ModuleList([SelfAttention(self.config.lstm_params['cell_neurons'][1],\
              self.config.att , self.config.att) for i in range(self.config.mul_head)])
         
         self.encoder_o = nn.Linear(self.config.att * self.config.mul_head, self.config.mul_head_output_nodes)
-
-        #Decoder
         self.lstm3 = nn.LSTM(input_size=self.config.mul_head_output_nodes, hidden_size=self.config.lstm_params['cell_neurons'][0], \
             num_layers=1, batch_first=True)
         self.lstm4 = nn.LSTM(input_size=self.config.lstm_params['cell_neurons'][0], \
@@ -46,8 +38,6 @@ class DeepQueueNet(nn.Module):
             x = self.fc1(x)
         for i, l in enumerate(self.atts):
             self.X = torch.cat((self.X,l(x)),dim=-1)
-        
-            #x = self.linears[i // 2](x) + l(x)
         self.X = self.encoder_o(self.X)
         
         
