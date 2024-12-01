@@ -15,9 +15,9 @@ class BaseConfig:
     seed=0
     window=63
     no_process=15 
-    epochs=100
+    epochs=1000
     n_outputs=1 
-    learning_rate=0.001
+    learning_rate=0.0001
     l2=0.1
     lstm_params={'layer':2,   'cell_neurons':[200,100],     'keep_prob':1}  
     att=64
