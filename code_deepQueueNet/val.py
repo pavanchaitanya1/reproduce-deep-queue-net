@@ -14,5 +14,4 @@ def val_DQN(val_dataloader,device,model,loss_fn,epoch, val_log):
             with open(val_log,'a+') as f:
                 f.write(str((epoch-1)*batch_idx + batch_idx)+"\t"+str(loss.item())+"\n")
             print("Epoch:"+str(epoch)+"\tbatch:"+str(batch_idx)+"\tval_loss:"+str(loss.item()))
-            break
     return loss_value / len(val_dataloader)

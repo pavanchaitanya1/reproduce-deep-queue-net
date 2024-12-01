@@ -4,7 +4,7 @@ from config import BaseConfig
 from DQN_dataset import DataFromH5File
 import torch
 import torch.utils.data as data
-from model2 import DeepQueueNet
+from model import DeepQueueNet
 import torch.nn as nn
 from train import train_DQN
 import numpy as np
@@ -37,9 +37,9 @@ def weight_init(m):
 
 if __name__ == "__main__":
     params = argparser()
-    # os.environ['CUDA_VISIBLE_DEVICES'] = params['gpu']
-    # device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-    device = torch.device("cpu")
+    os.environ['CUDA_VISIBLE_DEVICES'] = params['gpu']
+    device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+    # device = torch.device("cpu")
     params['save_dir'] = "../checkpoints"
     params['train_file'] = "../data/train.h5"
     params['test1_file'] = "../data/test1.h5"
@@ -74,7 +74,6 @@ if __name__ == "__main__":
             print(name, ':', parameters.size())        
         '''
 
-        epochs = 1
         model.apply(weight_init)
 
         print('Start Training Epochs: {}'.format(epochs))

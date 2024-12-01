@@ -6,7 +6,7 @@ class BaseConfig:
     test_size=0.2
     sub_rt=0.005
     TIME_STEPS=42
-    BATCH_SIZE=32
+    BATCH_SIZE=32*16*16
     modelname='4-port switch/FIFO'
     no_of_port=4
     no_of_buffer=1

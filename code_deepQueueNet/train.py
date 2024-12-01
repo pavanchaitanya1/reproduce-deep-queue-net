@@ -14,7 +14,6 @@ def train_DQN(train_loader,device,model,loss_fn,optimizer,epoch,train_log):
             f.write(str((epoch-1)*batch_idx + batch_idx)+"\t"+str(loss.item())+"\n")
         loss_value += loss.item()
         print("Epoch:"+str(epoch)+"\tbatch:"+str(batch_idx)+"\ttrain_loss:"+str(loss.item()))
-        break
     return loss_value / len(train_loader)
 
 
