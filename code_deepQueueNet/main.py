@@ -41,9 +41,9 @@ if __name__ == "__main__":
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
     # device = torch.device("cpu")
     params['save_dir'] = "../checkpoints"
-    params['train_file'] = "../data/train.h5"
-    params['test1_file'] = "../data/test1.h5"
-    params['test2_file'] = "../data/test2.h5"
+    params['train_file'] = "/kaggle/input/deepqueuenet-dataset/DeepQueueNet-synthetic data/trained/sample/train.h5"
+    params['test1_file'] = "/kaggle/input/deepqueuenet-dataset/DeepQueueNet-synthetic data/trained/sample/test1.h5"
+    params['test2_file'] = "/kaggle/input/deepqueuenet-dataset/DeepQueueNet-synthetic data/trained/sample/test2.h5"
     params['mode'] = 1
     config = BaseConfig()
     torch.manual_seed(config.seed)
